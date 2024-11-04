@@ -9,6 +9,11 @@ TIME_LIMIT_SYSTEM = 6
 JUDGE_FOLDERPATH = "workspace"
 USER_FOLDERPATH = "user_submissions"
 
+if not os.path.exists(JUDGE_FOLDERPATH):
+    os.makedirs(JUDGE_FOLDERPATH)
+if not os.path.exists(USER_FOLDERPATH):
+    os.makedirs(USER_FOLDERPATH)
+
 
 class InternalJudging(Exception): # Fault by problem setter
     def __init__(self, code, content, err):
@@ -85,7 +90,7 @@ class Triangle:
     You can try something else im developing
     """
 
-    languages: dict[str, dict]
+    languages: dict
     """
     {
         "id": "python3",
@@ -120,7 +125,7 @@ class Triangle:
                     print(stderr.decode())
 
 
-    config: dict[str,int|dict|list]
+    config: dict
     compile_result:dict
 
     def compile_single(self, i):
@@ -172,7 +177,7 @@ class Triangle:
         cmd = self.config[id]['language']['execution'].format(name=source_name).split() + list(args)
         return create_process(cmd, memorylimit, JUDGE_FOLDERPATH)
 
-    def single_test(self, input: bytes, user_process: 'SourceCode') -> tuple[str, str, int, str]:
+    def single_test(self, input: bytes, user_process: 'SourceCode') -> tuple:
         """
         Return tuple of output, answer, verdictcode, checker_response
         """
@@ -301,7 +306,7 @@ class SourceCode:
         cmd = self.language['execution'].format(name=self.name)
         return create_process(cmd, memory_limit, USER_FOLDERPATH)
 
-    def run(self, input:bytes=None, memory_limit:int=256, time_limit:float=1) -> tuple[bytes,bytes,int]: # stdout stderr code
+    def run(self, input:bytes=None, memory_limit:int=256, time_limit:float=1) -> tuple: # stdout stderr code
         try:
             process = self.getprocess(memory_limit)
             stdout, stderr = process.communicate(input if input else None, timeout=time_limit)

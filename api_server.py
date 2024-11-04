@@ -11,7 +11,6 @@ from judger import *
 
 app = Flask(__name__)
 triangle = Triangle()
-triangle.compile()
 usercode = SourceCode(triangle)
 
 
