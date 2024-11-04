@@ -1,5 +1,5 @@
-workspace/*
-user_submissions/*
+# workspace/*
+# user_submissions/*
 
 # Python
 __pycache__/
