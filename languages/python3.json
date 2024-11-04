@@ -1,0 +1,7 @@
+{
+    "id": "python3",
+    "file_extension": ".py",
+    "compilation": null,
+    "execution": "python {name}.py",
+    "version": "python -V"
+}

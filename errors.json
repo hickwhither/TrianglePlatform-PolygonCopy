@@ -1,0 +1,20 @@
+{
+    "0": "Accepted",
+    "1": "Wrong Answer",
+    "2": "Wrong output format",
+    "3": "Failed",
+    "124": "Time Limit Exceeded",
+
+    "127": "Command Not Found",
+    "132": "Illegal instruction or that the binary is probably corrupt (SIGILL)",
+    "134": "Assertion Error (SIGABRT)",
+    "136": "Floating point exception or integer overflow (SIGFPE)",
+    "137": "Out of Memory",
+    "138": "Unaligned memory access (SIGBUS)",
+    "139": "Trying to access a memory location not allocated to it (Segmentation Fault)",
+    "153": "File size limit exceeded (SIGXFSZ)",
+    "159": "file size limit exceeded (SIGXFSZ)",
+    "default": "Returned code isn't 0 (RTE)",
+
+    "69": "Internal error, setter/developers will fix and rejudge this asap, come back later to check"
+}

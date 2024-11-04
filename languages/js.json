@@ -1,0 +1,7 @@
+{
+    "id": "js",
+    "file_extension": ".js",
+    "compilation": null,
+    "execution": "node {name}.js",
+    "version": "node -v"
+}
