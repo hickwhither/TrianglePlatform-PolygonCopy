@@ -1,6 +1,13 @@
-Make sure .env
+## Docker Usage
+
+Build the container:
+```sh
+docker build -t triangle-platform .
 ```
-SECRET=blah
+
+Run the server:
+```sh
+docker run -p 9111:80 --name name triangle-platform <secret_key>
 ```
 
 A config file should looks like this

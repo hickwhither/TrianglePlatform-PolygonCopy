@@ -1,0 +1,7 @@
+{
+    "id": "java",
+    "file_extension": ".java",
+    "compilation": "javac {name}.java",
+    "execution": "java {name}",
+    "version": "java -version"
+}

@@ -1,11 +1,8 @@
 from flask import Flask, request
-import os, threading
+import os, threading, sys
 import zipfile, shutil
 import time
-
-from dotenv import load_dotenv
-load_dotenv()
-SECRET = os.environ['SECRET']
+SECRET = sys.agrv[1]
 
 from judger import *
 

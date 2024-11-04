@@ -1,4 +1,5 @@
 import requests
+import time
 
 code = """
 #include <iostream>
@@ -18,7 +19,9 @@ int main() {
 """
 language = "cpp17"    
 
-url = 'http://localhost:5000/judge'
+site = "https://clean-jasper-blinker.glitch.me"
+
+url = f'{site}/judge'
 files = {
     'file': ('aplusb.zip', open("aplusb.zip", 'rb'), 'application/zip')
 }
@@ -29,9 +32,10 @@ data = {
 
 HEADERS = {'Authorization': '69420'}
 
-response = requests.post(url, files=files, data=data, headers=HEADERS)
-print(response.json())
+# response = requests.post(f"{site}/judge", files=files, data=data, headers=HEADERS)
+# print(response.json())
 
-response = requests.get("http://127.0.0.1:5000/submissions", headers=HEADERS)
+# time.sleep(2)
+response = requests.get(f"{site}/submissions", headers=HEADERS)
 print(response.json())
 
