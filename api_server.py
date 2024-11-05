@@ -54,7 +54,7 @@ def threading_triangle_judge(data: dict):
         stdout, stderr, returncode = triangle.compile_any(i, data[i].get('source'), data[i].get('language'))
         if returncode != 0:
             submission_result = {
-                "response": f"{i} compile error ({returncode})\n{stdout.decode().replace('\r','')}{stderr.decode().replace('\r','')}",
+                "response": f"{i} compile error ({returncode})\n" + stdout.decode().replace('\r','') + '\n' + stderr.decode().replace('\r',''),
                 "verdict": 69,
                 "results": None,
                 "runtime": time.time()-startTime
@@ -65,7 +65,7 @@ def threading_triangle_judge(data: dict):
         stdout, stderr, returncode = triangle.compile_any('checker', checker.get('source'), checker.get('language'))
         if returncode != 0:
             submission_result = {
-                "response": f"Checker compile error ({returncode})\n{stdout.decode().replace('\r','')}{stderr.decode().replace('\r','')}",
+                "response": f"Checker compile error ({returncode})\n" + stdout.decode().replace('\r','') + '\n' + stderr.decode().replace('\r',''),
                 "verdict": 69,
                 "results": None,
                 "runtime": time.time()-startTime
@@ -117,7 +117,7 @@ def triangle_judge():
         return isinstance(d, dict) and all(key in d for key in ['source', 'language'])
     for key in ['generator', 'solver', 'user']:
         if not has_required_keys(data.get(key)):
-            return {"error": f"Invalid '{key}' format. Expected a dictionary with 'source' and 'language' keys."}, 400
+            return {"error": f"Invalid `{key}` format. Expected a dictionary with 'source' and 'language' keys."}, 400
 
     checker = data.get('checker')
     if not (has_required_keys(checker) or (isinstance(checker, str) and checker.startswith(('token', 'line', 'float')))):
