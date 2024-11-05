@@ -1,3 +1,5 @@
+
+
 ## Docker Usage
 
 Build the container:
@@ -10,28 +12,29 @@ Run the server:
 docker run -p 9111:80 --name name triangle-platform <secret_key>
 ```
 
-A config file should looks like this
+## Api
+'/triangle-judge`
 ```
 {
-    "memorylimit": 256,
-    "timelimit": 1,
+    "memory_limit": 256,
+    "time_limit": 1,
     "tests": [
         "123"
     ],
     "generator":{
-        "path": "generator.cpp",
+        "source": "...",
         "language": "cpp17"
     },
     "validator":{
-        "path": "validator.cpp",
+        "source": "...",
         "language": "cpp17"
     },
     "solution":{
-        "path": "solution.cpp",
+        "source": "...",
         "language": "cpp17"
     },
     "checker":{
-        "path": "checker.cpp",
+        "source": "...",
         "language": "cpp17"
     }
 }

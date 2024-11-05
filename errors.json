@@ -16,5 +16,6 @@
     "159": "file size limit exceeded (SIGXFSZ)",
     "default": "Returned code isn't 0 (RTE)",
 
+    "96": "Compile error",
     "69": "Internal error, setter/developers will fix and rejudge this asap, come back later to check"
 }

@@ -12,4 +12,4 @@ COPY . /app
 WORKDIR /app
 RUN pip install --no-cache-dir -r requirements.txt 
 
-ENTRYPOINT ["python", "app.py"]
+ENTRYPOINT ["python", "api_server.py"]
