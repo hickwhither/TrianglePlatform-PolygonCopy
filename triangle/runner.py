@@ -61,12 +61,13 @@ class SourceCode:
                     preexec_fn=lambda: __import__('resource').setrlimit(
                         __import__('resource').RLIMIT_AS,
                         (memory_limit * 1024 * 1024, memory_limit * 1024 * 1024)),
-                    cwd=self.folder_name)
+                    shell=True, cwd=self.folder_name)
             else:
                 if not _linuxflag_warning:
                     print("\033[93mWARNING: THIS SYSTEM IS NOT LINUX, `resource` library will not be used for limit memory.\033[0m")
                     print("\033[92mSet `IGNORE_LINUX_FLAG = True` in `triangle/runner.py` in this file if you wanna use it anyways\033[0m")
                     _linuxflag_warning = True
+                if cmd.startswith('./'): cmd = cmd[2:]
                 process = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, cwd=self.folder_name)
             process_start_time = time.time()
             process_memory = psutil.Process(process.pid).memory_info().rss / (1024 * 1024)

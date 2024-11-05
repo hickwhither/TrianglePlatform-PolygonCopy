@@ -56,10 +56,11 @@ int main() {
 }
 """
 
-site = "http://127.0.0.1:80"
+site = "http://127.0.0.1:9111"
 
 url = f'{site}/judge'
 data = {
+    "limit_character": 200,
     "memory_limit": 256,
     "time_limit": 1,
     "tests":["123", "69420" "19973"],
@@ -72,10 +73,9 @@ data = {
 
 HEADERS = {'Authorization': '69420'}
 
-# response = requests.post(f"{site}/triangle_judge", json=data, headers=HEADERS)
-# print(response.json())
-
-# time.sleep(2)
+response = requests.post(f"{site}/triangle_judge", json=data, headers=HEADERS)
+print(response.json())
+time.sleep(2)
 response = requests.get(f"{site}/submission", headers=HEADERS)
 print(response.json())
 

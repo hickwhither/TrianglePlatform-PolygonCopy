@@ -82,10 +82,17 @@ def threading_triangle_judge(data: dict):
             }
             return
     
-    triangle.run()
+    triangle.run(data.get('limit_character', 2690))
+    
+    verdicts = {}
+    for i in triangle.results:
+        if not verdicts.get(i['verdict']): verdicts[i['verdict']] = 0
+        verdicts[i['verdict']] += 1
+    verdict_max = max(verdicts, key=verdicts.get)
+    
     submission_result = {
         "response": "ok",
-        "verdict": max(i for i, result in enumerate(triangle.results) if result['verdict'] == max(r['verdict'] for r in triangle.results)),
+        "verdict": verdict_max,
         "results": triangle.results,
         "runtime": time.time()-startTime
     }

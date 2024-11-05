@@ -2,6 +2,6 @@
     "id": "cpp17",
     "file_extension": ".cpp",
     "compilation": "g++ -std=c++17 -Wall -O2 -lm -fmax-errors=5 -march=native -s {name}.cpp -o {name}.out",
-    "execution": "{name}.out",
+    "execution": "./{name}.out",
     "version": "g++ --version"
 }

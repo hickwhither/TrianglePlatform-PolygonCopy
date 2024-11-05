@@ -75,7 +75,7 @@ class Triangle:
     # Set generator args
     def set_tests(self, tests): self.tests = tests
 
-    def run(self):
+    def run(self, limit_character:int = 2690):
         """
         Make sure that rejudged the code
         Run the whole code and assign self.result = a list of
@@ -87,7 +87,7 @@ class Triangle:
             "answer":
         }
         """
-        def single_run(args):
+        def single_run(args) -> dict:
             input, gen_error, gen_code, gen_duration, gen_memory = self.generator.run(args, MEMORY_LIMIT_SYSTEM, TIME_LIMIT_SYSTEM)
             if gen_code:
                 return {
@@ -121,4 +121,9 @@ class Triangle:
     
         self.results = []
         for args in self.tests:
-            self.results.append(single_run(args))
+            data:dict = single_run(args)
+            if data.get('response'): data['response'] = data['response'][:limit_character] + '...' if len(data['response']) > limit_character else data['response']
+            if data.get('input'): data['input'] = data['input'][:limit_character] + '...' if len(data['input']) > limit_character else data['input']
+            if data.get('output'): data['output'] = data['output'][:limit_character] + '...' if len(data['output']) > limit_character else data['output']
+            if data.get('answer'): data['response'] = data['response'][:limit_character] + '...' if len(data['response']) > limit_character else data['response']
+            self.results.append(data)
