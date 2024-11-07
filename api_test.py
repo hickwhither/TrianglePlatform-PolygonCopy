@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
 }
 """
 
-solver = """
+brute = """
 #include <iostream>
 using namespace std;
 
@@ -56,7 +56,7 @@ int main() {
 }
 """
 
-site = "http://127.0.0.1:9111"
+site = "http://127.0.0.1:80"
 
 url = f'{site}/judge'
 data = {
@@ -65,17 +65,15 @@ data = {
     "time_limit": 1,
     "tests":["123", "69420" "19973"],
     "generator":{"source":generator, "language":"cpp17"},
-    "solver":{"source":solver, "language":"cpp17"},
+    "brute":{"source":brute, "language":"cpp17"},
     "user":{"source":code, "language":"cpp17"},
-    "validator": "null",
     "checker": "token"
 }
 
-HEADERS = {'Authorization': '69420'}
+# response = requests.post(f"{site}/judge", json=data)
+# print(response.json())
 
-response = requests.post(f"{site}/triangle_judge", json=data, headers=HEADERS)
-print(response.json())
 time.sleep(2)
-response = requests.get(f"{site}/submission", headers=HEADERS)
+response = requests.get(f"{site}/submission")
 print(response.json())
 

@@ -1,7 +1,12 @@
+This is use for high quality stress test with low quality machine ~~(free host yes im actually doing it)~~
+I named triangle because it's the minumum edge 'Polygon'
 
+## Normal run
+```
+python main.py
+```
 
 ## Docker Usage
-
 Build the container:
 ```sh
 docker build -t triangle-platform .
@@ -9,31 +14,57 @@ docker build -t triangle-platform .
 
 Run the server:
 ```sh
-docker run -p 9111:80 --name name triangle-platform <secret_key>
+docker run -p 9111:80 --name name triangle-platform
 ```
 
-## Api
-'/triangle-judge`
+### '/'
+For ping
+```json
+{
+    "start": "timezone:int", // uptime
+    "status": "idle/compiling/judging"
+}
 ```
+### '/submission'
+Result of judge
+```json
+{
+    "response": "...",
+    "results": [ // could be null if not successfully compile
+        {
+            "verdict": "int",
+            "response": "reponse from checker/judger",
+            "input": "str",
+            "output":"str",
+            "answer":"str"
+        },
+        ...
+    ]
+}
+```
+
+### '/judge`
+```json
 {
     "memory_limit": 256,
     "time_limit": 1,
-    "tests": [
+    "limit_character": 256, // if it's too long
+    "tests": [ // args for generator
         "123"
     ],
     "generator":{
         "source": "...",
         "language": "cpp17"
     },
-    "validator":{
-        "source": "...",
-        "language": "cpp17"
-    },
-    "solution":{
-        "source": "...",
-        "language": "cpp17"
-    },
     "checker":{
+        "source": "...",
+        "language": "cpp17"
+    },
+    "brute":{ // answer
+        "source": "...",
+        "language": "cpp17"
+    },
+    "user":{
         "source": "...",
         "language": "cpp17"
     }
@@ -45,9 +76,4 @@ Checker also be this
 "checker": "token"
 "checker": "line"
 "checker": "float6"
-```
-
-Validator also be this
-```
-"validator": null
 ```

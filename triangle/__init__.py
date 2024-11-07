@@ -52,8 +52,7 @@ class Triangle:
         self.time_limit = time_limit
 
     # Compile and file compiled
-    validator: SourceCode # Unused
-    solver: SourceCode
+    brute: SourceCode
     user: SourceCode
     generator: SourceCode
     checker: SourceCode
@@ -94,29 +93,29 @@ class Triangle:
                     "verdict": 69,
                     "response": f"Generator returned code {gen_code}\n" + input + '\n' + gen_error
                 }
-            solver, solver_error, solver_code, solver_duration, solver_memory = self.solver.run(args=None, memory_limit=self.memory_limit, time_limit=self.time_limit, input=input)
-            if solver_code:
+            brute, brute_error, brute_code, brute_duration, brute_memory = self.brute.run(args=None, memory_limit=self.memory_limit, time_limit=self.time_limit, input=input)
+            if brute_code:
                 return {
                     "verdict": 3,
-                    "response": f"Solver returned {gen_code}\n" + solver + '\n' + solver_error
+                    "response": f"brute returned {gen_code}\n" + brute + '\n' + brute_error
                 }
             user, user_error, user_code, user_duration, user_memory = self.user.run(args=None, memory_limit=self.memory_limit, time_limit=self.time_limit, input=input)
             if user_code:
                 return {
                     "verdict": user_code,
-                    "response": solver + '\n' + solver_error
+                    "response": brute + '\n' + brute_error
                 }
             if isinstance(self.checker, SourceCode):
                 stdout, stderr, checker_code = self.checker.run("", MEMORY_LIMIT_SYSTEM, TIME_LIMIT_SYSTEM)
                 checker_response = stdout + '\n' + stderr
             else:
-                checker_code, checker_response = self.checker(user, solver)
+                checker_code, checker_response = self.checker(user, brute)
             return {
                 "verdict": checker_code,
                 "response": checker_response,
                 "input": input,
                 "output": user,
-                "answer": solver
+                "answer": brute
             }
     
         self.results = []
