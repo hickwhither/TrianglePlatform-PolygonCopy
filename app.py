@@ -22,13 +22,6 @@ def home():
     current_status["results"] = triangle.results
     return current_status, 200
 
-def check_for_force_stop():
-    if triangle.force_stop:
-        current_status["response"] = "ok"
-        current_status["status"] = "idle"
-        current_status["runtime"] = 0
-    return triangle.force_stop
-
 def threading_triangle_judge(data: dict):
     global triangle, current_status
     triangle.force_stop = False
@@ -42,7 +35,7 @@ def threading_triangle_judge(data: dict):
     triangle.set_limited(data.get('memory_limit'), data.get('time_limit'))
     triangle.set_tests(data.get('tests'))
 
-    if check_for_force_stop(): return
+    if triangle.force_stop: return
 
     for i in ['generator', 'brute', 'user']:
         stdout, stderr, returncode = triangle.compile_any(i, data[i].get('source'), data[i].get('language'))
@@ -51,7 +44,7 @@ def threading_triangle_judge(data: dict):
             current_status["runtime"] = time.time()-startTime
             current_status["status"] = "idle"
             return
-        if check_for_force_stop(): return
+        if triangle.force_stop: return
     
     checker = data.get('checker')
     if isinstance(checker, dict):
@@ -68,12 +61,12 @@ def threading_triangle_judge(data: dict):
             current_status["runtime"] = time.time()-startTime
             current_status["status"] = "idle"
             return
-    if check_for_force_stop(): return
+    if triangle.force_stop: return
     
     current_status["status"] = "judging"
     
     triangle.run(data.get('limit_character', 2690))
-    if check_for_force_stop(): return
+    if triangle.force_stop: return
     
     current_status["response"] = "ok"
     current_status["runtime"] = time.time()-startTime
@@ -116,6 +109,10 @@ def force_stop():
     if current_status["status"] == "idle":
         return {"response": "Judge is already idle"}, 200
     triangle.force_stop = True
+    time.sleep(1)
+    current_status["response"] = "ok"
+    current_status["status"] = "idle"
+    current_status["runtime"] = 0
     return {"response": "Judge stopped"}, 200
 
 if __name__ == '__main__':
