@@ -29,7 +29,9 @@ triangle.languages
 """
 
 @app.route('/', methods=['GET'])
-def home(): return current_status, 200
+def home():
+    current_status["results"] = triangle.results
+    return current_status, 200
 
 def threading_triangle_judge(data: dict):
     global triangle, current_status
@@ -76,7 +78,6 @@ def threading_triangle_judge(data: dict):
     verdict_max = max(verdicts, key=verdicts.get)
     
     current_status["response"] = "ok"
-    current_status["results"] = triangle.results
     current_status["runtime"] = time.time()-startTime
     current_status["status"] = "idle"
 
