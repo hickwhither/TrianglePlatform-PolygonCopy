@@ -73,7 +73,7 @@ data = {
 # response = requests.post(f"{site}/judge", json=data)
 # print(response.json())
 
-time.sleep(2)
-response = requests.get(f"{site}/submission")
+# time.sleep(2)
+response = requests.get(site)
 print(response.json())
 

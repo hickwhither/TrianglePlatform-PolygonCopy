@@ -18,18 +18,14 @@ docker run -p 9111:80 --name name triangle-platform
 ```
 
 ### '/'
-For ping
+For ping/result of judge
 ```json
 {
     "start": "timezone:int", // uptime
-    "status": "idle/compiling/judging"
-}
-```
-### '/submission'
-Result of judge
-```json
-{
+    "status": "idle/compiling/judging",
+    
     "response": "...",
+    "runtime": "seconds:int",
     "results": [ // could be null if not successfully compile
         {
             "verdict": "int",
