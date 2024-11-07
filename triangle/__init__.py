@@ -20,6 +20,7 @@ class Triangle:
     }   
     """
     def __init__(self, languages_folder:str = 'languages'):
+        self.results = None
         self.languages = {}
         for i in os.listdir('languages'):
             if i.endswith('.json'):
