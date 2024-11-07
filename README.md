@@ -17,7 +17,7 @@ Run the server:
 docker run -p 9111:8080 --name name triangle-platform
 ```
 
-### '/'
+### GET '/'
 For ping/result of judge
 ```json
 {
@@ -39,7 +39,7 @@ For ping/result of judge
 }
 ```
 
-### '/judge`
+### POST '/judge`
 ```json
 {
     "memory_limit": 256,
@@ -68,8 +68,17 @@ For ping/result of judge
 ```
 
 Checker also be this
-```
+```js
 "checker": "token"
 "checker": "line"
 "checker": "float6"
+```
+
+### POST '/stop'
+```json
+{"response": "Judge is already idle"}
+```
+
+```json
+{"response": "Judge stopped"}
 ```

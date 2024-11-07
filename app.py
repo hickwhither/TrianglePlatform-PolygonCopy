@@ -17,24 +17,21 @@ current_status = {
     "runtime": None
 }
 
-triangle.languages
-"""
-{
-    "id": "python3",
-    "file_extension": ".py",
-    "compilation": null,
-    "execution": "python {name}.py",
-    "version": "python -V"
-}   
-"""
-
 @app.route('/', methods=['GET'])
 def home():
     current_status["results"] = triangle.results
     return current_status, 200
 
+def check_for_force_stop():
+    if triangle.force_stop:
+        current_status["response"] = "ok"
+        current_status["status"] = "idle"
+        current_status["runtime"] = 0
+    return triangle.force_stop
+
 def threading_triangle_judge(data: dict):
     global triangle, current_status
+    triangle.force_stop = False
     current_status["response"] = None
     current_status["results"] = None
     current_status["runtime"] = None
@@ -45,6 +42,8 @@ def threading_triangle_judge(data: dict):
     triangle.set_limited(data.get('memory_limit'), data.get('time_limit'))
     triangle.set_tests(data.get('tests'))
 
+    if check_for_force_stop(): return
+
     for i in ['generator', 'brute', 'user']:
         stdout, stderr, returncode = triangle.compile_any(i, data[i].get('source'), data[i].get('language'))
         if returncode != 0:
@@ -52,6 +51,8 @@ def threading_triangle_judge(data: dict):
             current_status["runtime"] = time.time()-startTime
             current_status["status"] = "idle"
             return
+        if check_for_force_stop(): return
+    
     checker = data.get('checker')
     if isinstance(checker, dict):
         stdout, stderr, returncode = triangle.compile_any('checker', checker.get('source'), checker.get('language'))
@@ -67,15 +68,12 @@ def threading_triangle_judge(data: dict):
             current_status["runtime"] = time.time()-startTime
             current_status["status"] = "idle"
             return
+    if check_for_force_stop(): return
     
     current_status["status"] = "judging"
     
     triangle.run(data.get('limit_character', 2690))
-    verdicts = {}
-    for i in triangle.results:
-        if not verdicts.get(i['verdict']): verdicts[i['verdict']] = 0
-        verdicts[i['verdict']] += 1
-    verdict_max = max(verdicts, key=verdicts.get)
+    if check_for_force_stop(): return
     
     current_status["response"] = "ok"
     current_status["runtime"] = time.time()-startTime
@@ -112,6 +110,13 @@ def triangle_judge():
     thread.start()
 
     return {"response": "Judging started"}, 200
+
+@app.route('/stop', methods=['POST'])
+def force_stop():
+    if current_status["status"] == "idle":
+        return {"response": "Judge is already idle"}, 200
+    triangle.force_stop = True
+    return {"response": "Judge stopped"}, 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

@@ -9,17 +9,11 @@ MEMORY_LIMIT_SYSTEM = 256
 TIME_LIMIT_SYSTEM = 6
 
 class Triangle:
+    force_stop: bool
     languages: dict
-    """
-    {
-        "id": "python3",
-        "file_extension": ".py",
-        "compilation": null,
-        "execution": "python {name}.py",
-        "version": "python -V"
-    }   
-    """
+    results: dict
     def __init__(self, languages_folder:str = 'languages'):
+        self.force_stop = False
         self.results = None
         self.languages = {}
         for i in os.listdir('languages'):
@@ -121,6 +115,8 @@ class Triangle:
         
         self.results = []
         for args in self.tests:
+            print(self.force_stop)
+            if self.force_stop: break
             data:dict = single_run(args)
             if data['verdict'] == 0:
                 if data.get("input"): del data["input"]
@@ -135,3 +131,5 @@ class Triangle:
                     data["answer"] = data["answer"][:limit_character] + "\n..."
             self.results.append(data)
             if data['verdict'] != 0: break
+            if self.force_stop: break
+
