@@ -109,7 +109,7 @@ def force_stop():
     if current_status["status"] == "idle":
         return {"response": "Judge is already idle"}, 200
     triangle.force_stop = True
-    time.sleep(1)
+    time.sleep(10)
     current_status["response"] = "ok"
     current_status["status"] = "idle"
     current_status["runtime"] = 0
