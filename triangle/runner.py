@@ -29,9 +29,10 @@ class SourceCode:
         self.file_extension = language['file_extension']
         self.compilation = language['compilation']
         self.execution = language['execution']
-
+        
         self.folder_name = os.path.join("temp", str(uuid4()))
         self.file_name = os.path.join(self.folder_name, "source")
+        if not os.path.exists("temp"): os.mkdir("temp")
         os.mkdir(self.folder_name)
         with open(self.file_name + self.file_extension, "w", encoding="utf-8") as f:
             f.write(source_code)
