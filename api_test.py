@@ -56,7 +56,7 @@ int main() {
 }
 """
 
-site = "http://127.0.0.1:80"
+site = "http://127.0.0.1:9111"
 
 url = f'{site}/judge'
 data = {
@@ -70,10 +70,9 @@ data = {
     "checker": "token"
 }
 
-# response = requests.post(f"{site}/judge", json=data)
-# print(response.json())
-
-# time.sleep(2)
+response = requests.post(f"{site}/judge", json=data)
+print(response.json())
+time.sleep(2)
 response = requests.get(site)
 print(response.json())
 

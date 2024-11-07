@@ -117,12 +117,20 @@ class Triangle:
                 "output": user,
                 "answer": brute
             }
-    
+        
         self.results = []
         for args in self.tests:
             data:dict = single_run(args)
-            if data.get('response'): data['response'] = data['response'][:limit_character] + '...' if len(data['response']) > limit_character else data['response']
-            if data.get('input'): data['input'] = data['input'][:limit_character] + '...' if len(data['input']) > limit_character else data['input']
-            if data.get('output'): data['output'] = data['output'][:limit_character] + '...' if len(data['output']) > limit_character else data['output']
-            if data.get('answer'): data['response'] = data['response'][:limit_character] + '...' if len(data['response']) > limit_character else data['response']
+            if data['verdict'] == 0:
+                if data.get("input"): del data["input"]
+                if data.get("output"): del data["output"]
+                if data.get("answer"): del data["answer"]
+            else:
+                if data.get("input") and len(data["input"]) > limit_character:
+                    data["input"] = data["input"][:limit_character] + "\n..."
+                if data.get("output") and len(data["output"]) > limit_character:
+                    data["output"] = data["output"][:limit_character] + "\n..."
+                if data.get("answer") and len(data["answer"]) > limit_character:
+                    data["answer"] = data["answer"][:limit_character] + "\n..."
             self.results.append(data)
+            if data['verdict'] != 0: break

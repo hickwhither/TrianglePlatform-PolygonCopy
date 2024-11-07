@@ -82,6 +82,9 @@ def threading_triangle_judge(data: dict):
 
 @app.route('/judge', methods=['POST'])
 def triangle_judge():
+    if current_status["status"] != "idle":
+            return {"response": "Judge is busy"}, 503
+
     data = request.get_json()
 
     if not isinstance(data.get('tests'), list):
