@@ -38,6 +38,13 @@ class Triangle:
                     print(f"❌ Failed {language_name}:")
                     print(stdout.decode())
                     print(stderr.decode())
+    
+    def setup(self):
+        self.brute = None
+        self.user = None
+        self.generator = None
+        self.results = None
+        self.force_stop = False
 
     # Set memory and time limit
     memory_limit: float
@@ -115,7 +122,6 @@ class Triangle:
         
         self.results = []
         for args in self.tests:
-            print(self.force_stop)
             if self.force_stop: break
             data:dict = single_run(args)
             if data['verdict'] == 0:

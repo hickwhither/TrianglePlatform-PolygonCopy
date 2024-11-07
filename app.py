@@ -24,7 +24,6 @@ def home():
 
 def threading_triangle_judge(data: dict):
     global triangle, current_status
-    triangle.force_stop = False
     current_status["response"] = None
     current_status["results"] = None
     current_status["runtime"] = None
@@ -98,7 +97,7 @@ def triangle_judge():
     if not (has_required_keys(checker) or (isinstance(checker, str) and checker.startswith(('token', 'line', 'float')))):
         return {"response": "Invalid 'checker' format. Expected a dictionary with 'source' and 'language' keys or a string starting with 'token', 'line', or 'float'."}, 400
 
-    
+    triangle.setup()
     thread = threading.Thread(target=lambda data=data: threading_triangle_judge(data))
     thread.start()
 
