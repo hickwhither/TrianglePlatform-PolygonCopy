@@ -64,9 +64,9 @@ data = {
     "memory_limit": 256,
     "time_limit": 1,
     "tests":["123", "69420" "19973"],
-    "generator":{"source":generator, "language":"cpp17"},
-    "brute":{"source":brute, "language":"cpp17"},
-    "user":{"source":code, "language":"cpp17"},
+    "generator":{"source":generator, "language":"cpp"},
+    "brute":{"source":brute, "language":"cpp"},
+    "user":{"source":code, "language":"cpp"},
     "checker": "token"
 }
 
