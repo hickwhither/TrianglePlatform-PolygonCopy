@@ -71,7 +71,7 @@ class SourceCode:
                 if cmd.startswith('./'): cmd = cmd[2:]
                 process = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, cwd=self.folder_name)
             process_start_time = time.time()
-            process_memory = psutil.Process(process.pid).memory_info().rss / (1024 * 1024)
+            process_memory = psutil.Process(process.pid).memory_info().rss / (memory_limit * 1024 * 1024)
             stdout, stderr = process.communicate(input.encode() if input else None, timeout=time_limit)
             process_duration = time.time() - process_start_time
             if process_memory > memory_limit:
