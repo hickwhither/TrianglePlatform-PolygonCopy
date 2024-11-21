@@ -124,18 +124,12 @@ class Triangle:
         for args in self.tests:
             if self.force_stop: break
             data:dict = single_run(args)
-            if data['verdict'] == 0:
-                if data.get("input"): del data["input"]
-                if data.get("output"): del data["output"]
-                if data.get("answer"): del data["answer"]
-            else:
-                if data.get("input") and len(data["input"]) > limit_character:
-                    data["input"] = data["input"][:limit_character] + "\n..."
-                if data.get("output") and len(data["output"]) > limit_character:
-                    data["output"] = data["output"][:limit_character] + "\n..."
-                if data.get("answer") and len(data["answer"]) > limit_character:
-                    data["answer"] = data["answer"][:limit_character] + "\n..."
+            if data.get("input") and len(data["input"]) > limit_character:
+                data["input"] = data["input"][:limit_character] + "\n..."
+            if data.get("output") and len(data["output"]) > limit_character:
+                data["output"] = data["output"][:limit_character] + "\n..."
+            if data.get("answer") and len(data["answer"]) > limit_character:
+                data["answer"] = data["answer"][:limit_character] + "\n..."
             self.results.append(data)
-            if data['verdict'] != 0: break
             if self.force_stop: break
 
