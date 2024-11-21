@@ -41,7 +41,7 @@ Get result after judge
 ```json
 {
     "response": "...",
-    "runtime": "seconds:int",
+    "runtime": "seconds:float",
     "status": "idle/compiling/judging",
     "results_count": 69,
     "results": [ // could be null if not successfully compile
