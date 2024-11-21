@@ -19,6 +19,7 @@ docker run -p 9111:8080 --name name triangle-platform
 
 ### GET '/'
 For ping/result of judge
+`200`
 ```json
 {
     "start": "timezone:int", // uptime
@@ -67,6 +68,27 @@ For ping/result of judge
 }
 ```
 
+`200`
+```json
+{"response": "Judging started"}
+```
+`400`
+```json
+{"response": "Invalid 'tests' format. Expected a list."}
+```
+`400`
+```json
+{"response": "Invalid 'memory_limit' or 'time_limit' format. Expected float values."}
+```
+`400`
+```json
+{"response": f"Invalid `{key}` format. Expected a dictionary with 'source' and 'language' keys."}
+```
+`400`
+```json
+{"response": "Invalid 'checker' format. Expected a dictionary with 'source' and 'language' keys or a string starting with 'token', 'line', or 'float'."}
+```
+
 Checker also be this
 ```js
 "checker": "token"
@@ -75,10 +97,12 @@ Checker also be this
 ```
 
 ### POST '/stop'
+`200`
 ```json
 {"response": "Judge is already idle"}
 ```
 
+`200`
 ```json
 {"response": "Judge stopped"}
 ```
