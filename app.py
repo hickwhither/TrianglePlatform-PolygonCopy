@@ -13,13 +13,15 @@ current_status = {
     "start": time.time(),
 
     "response": None,
+    "results_count": 0,
     "results": None,
     "runtime": None
 }
 
 @app.route('/', methods=['GET'])
 def home():
-    current_status["results"] = triangle.results
+    if current_status['status'] != 'idle': current_status["results"] = triangle.results
+    current_status["results_count"] = len(current_status["results"])
     return current_status, 200
 
 def threading_triangle_judge(data: dict):

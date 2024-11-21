@@ -27,6 +27,7 @@ For ping/result of judge
     
     "response": "...",
     "runtime": "seconds:int",
+    "results_count": 69,
     "results": [ // could be null if not successfully compile
         {
             "verdict": "int",
