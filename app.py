@@ -20,7 +20,7 @@ current_status = {
 
 @app.route('/', methods=['GET'])
 def home():
-    if current_status['status'] != 'idle': current_status["results"] = triangle.results
+    if current_status['status'] == 'idle': current_status["results"] = triangle.results
     current_status["results_count"] = len(current_status["results"])
     return current_status, 200
 
