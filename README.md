@@ -33,8 +33,6 @@ Pinging judge
             "version": "..."
         },
     },
-    "response": "...",
-    "runtime": "seconds:int",
 }
 ```
 
@@ -42,6 +40,8 @@ Pinging judge
 Get result after judge
 ```json
 {
+    "response": "...",
+    "runtime": "seconds:int",
     "status": "idle/compiling/judging",
     "results_count": 69,
     "results": [ // could be null if not successfully compile
