@@ -18,15 +18,31 @@ docker run -p 9111:8080 --name name triangle-platform
 ```
 
 ### GET '/'
-For ping/result of judge
+Pinging judge
 `200`
 ```json
 {
     "start": "timezone:int", // uptime
     "status": "idle/compiling/judging",
-    
+    "versions": {
+        "cpp17":{
+            "id": "cpp17",
+            "file_extension": ".cpp",
+            "compilation": "g++ -std=c++17 -Wall -O2 -lm -fmax-errors=5 -march=native -s {name}.cpp -o {name}.out",
+            "execution": "./{name}.out",
+            "version": "..."
+        },
+    },
     "response": "...",
     "runtime": "seconds:int",
+}
+```
+
+### GET '/result'
+Get result after judge
+```json
+{
+    "status": "idle/compiling/judging",
     "results_count": 69,
     "results": [ // could be null if not successfully compile
         {
