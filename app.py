@@ -12,6 +12,9 @@ current_status = {
     "status": "idle",
     "start": time.time(),
 
+}
+
+current_result = {
     "response": None,
     "runtime": None
 }
@@ -23,17 +26,15 @@ def home():
 
 @app.route('/result')
 def result():
-    result = {}
-    result['status'] = current_status['status']
-    if result['status'] == 'idle': result["results"] = triangle.results
-    result["results_count"] = len(triangle.results or [])
-    return result, 200
+    current_result['status'] = current_status['status']
+    if current_result['status'] == 'idle': current_result["results"] = triangle.results
+    current_result["results_count"] = len(triangle.results or [])
+    return current_result, 200
 
 def threading_triangle_judge(data: dict):
-    global triangle, current_status
-    current_status["response"] = None
-    current_status["results"] = None
-    current_status["runtime"] = None
+    global triangle, current_status, current_result
+    current_result["results"] = None
+    current_result["runtime"] = None
     current_status["status"] = "compiling"
 
     startTime = time.time()
@@ -46,8 +47,8 @@ def threading_triangle_judge(data: dict):
     for i in ['generator', 'brute', 'user']:
         stdout, stderr, returncode = triangle.compile_any(i, data[i].get('source'), data[i].get('language'))
         if returncode != 0:
-            current_status["response"] = f"{i} compile error ({returncode})\n" + stdout.decode().replace('\r','') + '\n' + stderr.decode().replace('\r',''),
-            current_status["runtime"] = time.time()-startTime
+            current_result["response"] = f"{i} compile error ({returncode})\n" + stdout.decode().replace('\r','') + '\n' + stderr.decode().replace('\r',''),
+            current_result["runtime"] = time.time()-startTime
             current_status["status"] = "idle"
             return
         if triangle.force_stop: return
@@ -56,15 +57,15 @@ def threading_triangle_judge(data: dict):
     if isinstance(checker, dict):
         stdout, stderr, returncode = triangle.compile_any('checker', checker.get('source'), checker.get('language'))
         if returncode != 0:
-            current_status["response"] = f"Checker compile error ({returncode})\n" + stdout.decode().replace('\r','') + '\n' + stderr.decode().replace('\r',''),
-            current_status["runtime"] = time.time()-startTime
+            current_result["response"] = f"Checker compile error ({returncode})\n" + stdout.decode().replace('\r','') + '\n' + stderr.decode().replace('\r',''),
+            current_result["runtime"] = time.time()-startTime
             current_status["status"] = "idle"
             return
     else:
         response, returncode = triangle.use_builtin_checker(checker)
         if returncode != 0:
-            current_status["response"] = f"Checker error ({returncode})\n{response}"
-            current_status["runtime"] = time.time()-startTime
+            current_result["response"] = f"Checker error ({returncode})\n{response}"
+            current_result["runtime"] = time.time()-startTime
             current_status["status"] = "idle"
             return
     if triangle.force_stop: return
@@ -74,8 +75,8 @@ def threading_triangle_judge(data: dict):
     triangle.run(data.get('limit_character', 2690))
     if triangle.force_stop: return
     
-    current_status["response"] = "ok"
-    current_status["runtime"] = time.time()-startTime
+    current_result["response"] = "ok"
+    current_result["runtime"] = time.time()-startTime
     current_status["status"] = "idle"
 
 @app.route('/judge', methods=['POST'])
