@@ -50,7 +50,9 @@ Get result after judge
             "response": "reponse from checker/judger",
             "input": "str",
             "output":"str",
-            "answer":"str"
+            "answer":"str",
+            "time": "float",
+            "memory": "float:MB"
         },
         ...
     ]

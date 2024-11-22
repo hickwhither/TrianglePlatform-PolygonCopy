@@ -117,7 +117,9 @@ class Triangle:
                 "response": checker_response,
                 "input": input,
                 "output": user,
-                "answer": brute
+                "answer": brute,
+                "time": user_duration,
+                "memory": user_memory
             }
         
         self.results = []
