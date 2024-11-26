@@ -14,7 +14,7 @@ docker build -t triangle-platform .
 
 Run the server:
 ```sh
-docker run -p 9111:8080 --name name triangle-platform
+docker run -d -p 9111:8080 --name name triangle-platform
 ```
 
 ### GET '/'

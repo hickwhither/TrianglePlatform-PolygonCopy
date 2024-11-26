@@ -46,7 +46,7 @@ class SourceCode:
             process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=self.folder_name)
             stdout, stderr = process.communicate()
             return stdout, stderr, process.returncode
-        return 0, ""
+        return "", "", 0
     
     def run(self, args:str=None, memory_limit:float=256, time_limit:float=1, input:str=None) -> tuple:
         """
