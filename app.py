@@ -23,8 +23,7 @@ current_result = {
 @app.route('/', methods=['GET'])
 def home():
     current_status['versions'] = triangle.languages
-    current_status['name'] = get_name(current_status, current_result)
-    current_status['message'] = get_message(current_status, current_result)
+    current_status.update(get_message(current_status, current_result))
     return current_status, 200
 
 @app.route('/result')
