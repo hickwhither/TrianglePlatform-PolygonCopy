@@ -4,6 +4,7 @@ import zipfile, shutil
 import time
 
 from triangle import Triangle
+from message import get_name, get_message
 
 app = Flask(__name__)
 triangle:Triangle = Triangle()
@@ -22,6 +23,8 @@ current_result = {
 @app.route('/', methods=['GET'])
 def home():
     current_status['versions'] = triangle.languages
+    current_status['name'] = get_name(current_status, current_result)
+    current_status['message'] = get_message(current_status, current_result)
     return current_status, 200
 
 @app.route('/result')

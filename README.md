@@ -22,6 +22,8 @@ Pinging judge
 `200`
 ```json
 {
+    "name": "Trai tim em",
+    "message": "Tan vo",
     "start": "timezone:int", // uptime
     "status": "idle/compiling/judging",
     "versions": {
