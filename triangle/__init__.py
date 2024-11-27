@@ -104,8 +104,8 @@ class Triangle:
             user, user_error, user_code, user_duration, user_memory = self.user.run(args=None, memory_limit=self.memory_limit, time_limit=self.time_limit, input=input)
             if user_code:
                 return {
-                    "verdict": user_code,
-                    "response": brute + '\n' + brute_error
+                    "verdict": f"user code returned {user_code}",
+                    "response": user + '\n' + user_error
                 }
             if isinstance(self.checker, SourceCode):
                 stdout, stderr, checker_code = self.checker.run("", MEMORY_LIMIT_SYSTEM, TIME_LIMIT_SYSTEM)
