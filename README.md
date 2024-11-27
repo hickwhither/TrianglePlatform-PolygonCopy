@@ -22,6 +22,7 @@ Pinging judge
 `200`
 ```json
 {
+    "icon": "iconurlimg",
     "name": "Trai tim em",
     "message": "Tan vo",
     "start": "timezone:int", // uptime
