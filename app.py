@@ -4,7 +4,7 @@ import zipfile, shutil
 import time
 
 from triangle import Triangle
-from message import get_name, get_message
+from message import get_message
 
 app = Flask(__name__)
 triangle:Triangle = Triangle()
